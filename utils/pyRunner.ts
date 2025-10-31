@@ -11,7 +11,6 @@ export async function initPyodideEnv() {
   return pyodide;
 }
 
-// PyPIパッケージをインストール
 export async function installPackage(packageName: string) {
   const py = await initPyodideEnv();
   try {
@@ -25,7 +24,6 @@ await micropip.install("${packageName}")
   }
 }
 
-// アップロード／外部取得したPythonファイルをFSに書き込む
 export async function writePythonFilesToFS(files: File[]) {
   const py = await initPyodideEnv();
   for (const f of files) {
@@ -35,11 +33,9 @@ export async function writePythonFilesToFS(files: File[]) {
   }
 }
 
-// Pythonコードを実行（FSに書き込んだファイルを import 可）
 export async function runPython(code: string, files: File[] = []) {
   const py = await initPyodideEnv();
   try {
-    // PythonファイルをFSに書き込み
     await writePythonFilesToFS(files);
     const result = await py.runPythonAsync(code);
     return String(result);
